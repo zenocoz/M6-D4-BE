@@ -13,8 +13,48 @@ articlesRouter.post("/", async (req, res, next) => {
   }
 })
 
-articlesRouter.get("/", (req, res, next) => {})
-articlesRouter.put("/", (req, res, next) => {})
-articlesRouter.delete("/", (req, res, next) => {})
+articlesRouter.get("/", async (req, res, next) => {
+  try {
+    const articles = await Article.find()
+    res.send(articles)
+  } catch (error) {
+    console.log(error)
+  }
+})
+articlesRouter.get("/:id", async (req, res, next) => {
+  try {
+    const article = await Article.findById(req.params.id)
+    if (article) {
+      res.send(article)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+articlesRouter.put("/:id", async (req, res, next) => {
+  try {
+    const article = await Article.findByIdAndUpdate(req.params.id, req.body)
+    if (article) {
+      res.send(article)
+    } else {
+      //handle error
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
+articlesRouter.delete("/:id", async (req, res, next) => {
+  try {
+    const article = await Article.findByIdAndDelete(req.params.id)
+    if (article) {
+      res.send("Deleted")
+    } else {
+      //handle error
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 module.exports = articlesRouter
