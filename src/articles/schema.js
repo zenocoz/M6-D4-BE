@@ -1,12 +1,15 @@
-import mongoose from "mongoose"
-const { Schema } = mongoose
+const mongoose = require("mongoose")
+const { Schema } = require("mongoose")
 
 const articleSchema = new Schema(
   {
     headLine: "string",
     subHead: "string",
     content: "string",
-    category: "string",
+    category: {
+      name: "string",
+      img: "string",
+    },
     author: {
       name: "string",
       img: "string",
