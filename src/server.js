@@ -2,12 +2,14 @@ const express = require("express")
 const listEndpoints = require("express-list-endpoints")
 const mongoose = require("mongoose")
 const endpointsList = require("express-list-endpoints")
+const cors = require("cors")
 
 const articlesRouter = require("./articles")
 
 const server = express()
 const port = process.env.PORT
 
+server.use(cors())
 server.use(express.json())
 server.use("/articles", articlesRouter)
 
