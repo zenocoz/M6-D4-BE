@@ -1,5 +1,4 @@
 const express = require("express")
-const listEndpoints = require("express-list-endpoints")
 const mongoose = require("mongoose")
 const endpointsList = require("express-list-endpoints")
 const cors = require("cors")
