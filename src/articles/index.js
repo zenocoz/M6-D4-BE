@@ -1,4 +1,6 @@
 const express = require("express")
+const mongoose = require("mongoose")
+
 const Article = require("./model")
 const ReviewModel = require("./review_model")
 
@@ -58,8 +60,39 @@ articlesRouter.delete("/:id", async (req, res, next) => {
   }
 })
 
-articlesRouter.get("/:id/reviews", async (req, res, next) => {})
-articlesRouter.get("/:id/reviews/:reviewId", async (req, res, next) => {})
+articlesRouter.get("/:id/reviews", async (req, res, next) => {
+  try {
+    const { reviews } = await Article.findById(req.params.id, {
+      reviews: 1,
+      _id: 0,
+    })
+    res.send(reviews)
+  } catch (error) {
+    console.log(error)
+  }
+})
+articlesRouter.get("/:id/reviews/:reviewId", async (req, res, next) => {
+  try {
+    const { reviews } = await Article.findOne(
+      {
+        _id: mongoose.Types.ObjectId(req.params.id),
+      },
+      {
+        _id: 0,
+        reviews: {
+          $elemMatch: { _id: mongoose.Types.ObjectId(req.params.reviewId) },
+        },
+      }
+    )
+    if (reviews && reviews.length > 0) {
+      res.send(reviews[0])
+    } else {
+      next()
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
 articlesRouter.post("/:id", async (req, res, next) => {
   try {
     const newReview = new ReviewModel(req.body)
