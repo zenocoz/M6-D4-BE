@@ -60,4 +60,10 @@ articlesRouter.delete("/:id", async (req, res, next) => {
   }
 })
 
+articlesRouter.get("/:id/reviews", async (req, res, next) => {})
+articlesRouter.get("/:id/reviews/:reviewId", async (req, res, next) => {})
+articlesRouter.post("/:id", async (req, res, next) => {})
+articlesRouter.put("/:id/reviews/:reviewId", async (req, res, next) => {})
+articlesRouter.get("/:id/reviews/:reviewId", async (req, res, next) => {})
+
 module.exports = articlesRouter

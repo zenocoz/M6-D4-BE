@@ -14,6 +14,12 @@ const articleSchema = new Schema(
       name: "string",
       img: "string",
     },
+    review: [
+      {
+        text: "string",
+        user: "string",
+      },
+    ],
     cover: "string",
   },
   { timestamps: true }
