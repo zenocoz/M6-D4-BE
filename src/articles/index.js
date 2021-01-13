@@ -133,6 +133,23 @@ articlesRouter.put("/:id/reviews/:reviewId", async (req, res, next) => {
     console.log(error)
   }
 })
-articlesRouter.delete("/:id/reviews/:reviewId", async (req, res, next) => {})
+articlesRouter.delete("/:id/reviews/:reviewId", async (req, res, next) => {
+  try {
+    const modifiedArticle = await Article.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: {
+          reviews: { _id: mongoose.Types.ObjectId(req.params.reviewId) },
+        },
+      },
+      {
+        new: true,
+      }
+    )
+    res.send(modifiedArticle)
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 module.exports = articlesRouter
