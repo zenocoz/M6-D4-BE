@@ -14,7 +14,7 @@ const articleSchema = new Schema(
       name: "string",
       img: "string",
     },
-    review: [
+    reviews: [
       {
         text: "string",
         user: "string",
@@ -24,5 +24,4 @@ const articleSchema = new Schema(
   },
   { timestamps: true }
 )
-
 module.exports = mongoose.model("Article", articleSchema)
