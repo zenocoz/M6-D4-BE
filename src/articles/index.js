@@ -73,17 +73,12 @@ articlesRouter.get("/:id/reviews", async (req, res, next) => {
 })
 articlesRouter.get("/:id/reviews/:reviewId", async (req, res, next) => {
   try {
-    const { reviews } = await Article.findOne(
-      {
-        _id: mongoose.Types.ObjectId(req.params.id),
+    const { reviews } = await Article.findById(req.params.id, {
+      _id: 0,
+      reviews: {
+        $elemMatch: { _id: mongoose.Types.ObjectId(req.params.reviewId) },
       },
-      {
-        _id: 0,
-        reviews: {
-          $elemMatch: { _id: mongoose.Types.ObjectId(req.params.reviewId) },
-        },
-      }
-    )
+    })
     if (reviews && reviews.length > 0) {
       res.send(reviews[0])
     } else {
@@ -108,7 +103,36 @@ articlesRouter.post("/:id", async (req, res, next) => {
     console.log(error)
   }
 })
-articlesRouter.put("/:id/reviews/:reviewId", async (req, res, next) => {})
-articlesRouter.get("/:id/reviews/:reviewId", async (req, res, next) => {})
+articlesRouter.put("/:id/reviews/:reviewId", async (req, res, next) => {
+  try {
+    const { reviews } = await Article.findById(req.params.id, {
+      _id: 0,
+      reviews: {
+        $elemMatch: { _id: mongoose.Types.ObjectId(req.params.reviewId) },
+      },
+    })
+
+    if (reviews && reviews.length > 0) {
+      const reviewToModify = { ...reviews[0].toObject(), ...req.body }
+      const modifiedArticle = await Article.findOneAndUpdate(
+        {
+          _id: mongoose.Types.ObjectId(req.params.id),
+          "reviews._id": mongoose.Types.ObjectId(req.params.reviewId),
+        },
+        { $set: { "reviews.$": reviewToModify } },
+        {
+          runValidators: true,
+          new: true,
+        }
+      )
+      res.send(modifiedArticle)
+    } else {
+      next()
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
+articlesRouter.delete("/:id/reviews/:reviewId", async (req, res, next) => {})
 
 module.exports = articlesRouter
