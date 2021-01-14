@@ -74,8 +74,8 @@ usersRouter.delete("/:id", async (req, res, next) => {
 usersRouter.post("/:id/clap/:articleId", async (req, res, next) => {
   try {
     const article = await ArticleModel.findByIdAndUpdate(
-      req.params.id,
-      { $push: { claps: mongoose.Types.ObjectId(req.params.articleId) } },
+      req.params.articleId,
+      { $push: { claps: mongoose.Types.ObjectId(req.params.id) } },
       { new: true }
     )
     res.status(201).send(article)
