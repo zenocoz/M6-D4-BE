@@ -11,6 +11,7 @@ const articleSchema = new Schema(
       img: "string",
     },
     author: { type: Schema.Types.ObjectId, ref: "Author" },
+    claps: [{ type: Schema.Types.ObjectId, ref: "User" }],
     reviews: [
       {
         text: "string",

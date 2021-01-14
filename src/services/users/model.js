@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
-const { Schema } = require("mongoose")
+const { Schema, model } = require("mongoose")
+// const UserModel = mongoose.model("User", userSchema)
 
 const userSchema = new Schema(
   {
@@ -17,4 +18,5 @@ const userSchema = new Schema(
   }
 )
 
+// const UserModel = model("User", userSchema) //must be below the static functions
 module.exports = mongoose.model("User", userSchema)
