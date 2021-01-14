@@ -3,14 +3,28 @@ const mongoose = require("mongoose")
 const endpointsList = require("express-list-endpoints")
 const cors = require("cors")
 
-const articlesRouter = require("./articles")
+const articlesRouter = require("./services/articles")
+
+const {
+  notFoundHandler,
+  badRequestHandler,
+  genericErrorHandler,
+} = require("./errorHandlers")
 
 const server = express()
 const port = process.env.PORT
 
 server.use(cors())
 server.use(express.json())
+
+//Routes
 server.use("/articles", articlesRouter)
+
+// ERROR HANDLERS MIDDLEWARES
+
+server.use(badRequestHandler)
+server.use(notFoundHandler)
+server.use(genericErrorHandler)
 
 console.log(endpointsList(server))
 
