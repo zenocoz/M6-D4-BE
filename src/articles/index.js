@@ -1,5 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const q2m = require("query-to-mongo")
 
 const Article = require("./model")
 const ReviewModel = require("./review_model")
@@ -62,6 +63,21 @@ articlesRouter.delete("/:id", async (req, res, next) => {
 
 articlesRouter.get("/:id/reviews", async (req, res, next) => {
   try {
+    const query = q2m(req.query)
+    // console.log(query)
+    // const reviews = await Article.find(query.criteria)
+    //   .skip(query.options.skip)
+    //   .limit(query.options.limit)
+    // res.send(reviews)
+
+    // const { reviews } = await Article.findById(req.params.id, {
+    //   reviews: { skip: query.options.skip, limit: query.options.limit },
+    //   _id: 0,
+    // })
+
+    // res.send(reviews)
+    ///TODO queries above
+
     const { reviews } = await Article.findById(req.params.id, {
       reviews: 1,
       _id: 0,
