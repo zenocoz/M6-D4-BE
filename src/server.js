@@ -5,6 +5,7 @@ const cors = require("cors")
 
 const articlesRouter = require("./services/articles")
 const authorsRouter = require("./services/authors")
+const usersRouter = require("./services/users")
 
 const {
   notFoundHandler,
@@ -21,6 +22,7 @@ server.use(express.json())
 //Routes
 server.use("/articles", articlesRouter)
 server.use("/authors", authorsRouter)
+server.use("/users", usersRouter)
 
 // ERROR HANDLERS MIDDLEWARES
 
