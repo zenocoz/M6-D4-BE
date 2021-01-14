@@ -10,10 +10,7 @@ const articleSchema = new Schema(
       name: "string",
       img: "string",
     },
-    author: {
-      name: "string",
-      img: "string",
-    },
+    author: { type: Schema.Types.ObjectId, ref: "Author" },
     reviews: [
       {
         text: "string",

@@ -4,6 +4,7 @@ const endpointsList = require("express-list-endpoints")
 const cors = require("cors")
 
 const articlesRouter = require("./services/articles")
+const authorsRouter = require("./services/authors")
 
 const {
   notFoundHandler,
@@ -19,6 +20,7 @@ server.use(express.json())
 
 //Routes
 server.use("/articles", articlesRouter)
+server.use("/authors", authorsRouter)
 
 // ERROR HANDLERS MIDDLEWARES
 
